@@ -389,7 +389,7 @@ function createRouter(options) {
               query: nextQuery
             });
           });
-        });
+        }, nextRoutes, nextParams);
       },
 
       /**
