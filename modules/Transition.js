@@ -29,14 +29,14 @@ Transition.prototype.cancel = function () {
   this.abort(new Cancellation);
 };
 
-Transition.from = function (transition, routes, components, callback) {
+Transition.from = function (transition, routes, components, nextRoutes, nextParams, callback) {
   routes.reduce(function (callback, route, index) {
     return function (error) {
       if (error || transition.abortReason) {
         callback(error);
       } else if (route.onLeave) {
         try {
-          route.onLeave(transition, components[index], callback);
+          route.onLeave(transition, components[index], route, nextRoutes, nextParams, callback);
 
           // If there is no callback in the argument list, call it automatically.
           if (route.onLeave.length < 3)

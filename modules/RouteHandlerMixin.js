@@ -22,11 +22,13 @@ var RouteHandlerMixin = {
   },
 
   componentDidMount: function () {
-    this._updateRouteComponent(this.refs[REF_NAME]);
+    if(!this.props.customRouteUpdater)
+      this._updateRouteComponent(this.refs[REF_NAME]);
   },
 
   componentDidUpdate: function () {
-    this._updateRouteComponent(this.refs[REF_NAME]);
+    if(!this.props.customRouteUpdater)
+      this._updateRouteComponent(this.refs[REF_NAME]);
   },
 
   componentWillUnmount: function () {
