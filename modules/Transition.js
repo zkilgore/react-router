@@ -36,7 +36,7 @@ Transition.from = function (transition, routes, components, callback, nextRoutes
         callback(error);
       } else if (route.onLeave) {
         try {
-          route.onLeave(transition, components[index], route, callback, nextRoutes, nextParams);
+          route.onLeave(transition, components[index], callback, nextRoutes, nextParams);
 
           // If there is no callback in the argument list, call it automatically.
           if (route.onLeave.length < 3)
