@@ -9,13 +9,13 @@ exports.HashLocation = require('./locations/HashLocation');
 exports.HistoryLocation = require('./locations/HistoryLocation');
 exports.RefreshLocation = require('./locations/RefreshLocation');
 exports.StaticLocation = require('./locations/StaticLocation');
+exports.TestLocation = require('./locations/TestLocation');
 
 exports.ImitateBrowserBehavior = require('./behaviors/ImitateBrowserBehavior');
 exports.ScrollToTopBehavior = require('./behaviors/ScrollToTopBehavior');
 
 exports.History = require('./History');
 exports.Navigation = require('./Navigation');
-exports.RouteHandlerMixin = require('./RouteHandlerMixin');
 exports.State = require('./State');
 
 exports.createRoute = require('./Route').createRoute;

@@ -124,6 +124,7 @@ Related Modules
 - [rnr-constrained-route](https://github.com/bjyoungblood/rnr-constrained-route) - validate paths
   and parameters on route handlers.
 - [react-router-bootstrap](https://github.com/mtscout6/react-router-bootstrap) - Integration with [react-bootstrap](https://github.com/react-bootstrap/react-bootstrap) components.
+- [react-router-proxy-loader](https://github.com/odysseyscience/react-router-proxy-loader) - A Webpack loader to dynamically load react-router components on-demand
 
 Contributing
 ------------
@@ -136,4 +137,3 @@ Thanks, Ember
 This library is highly inspired by the Ember.js routing API. In general,
 it's a translation of the Ember router api to React. Huge thanks to the
 Ember team for solving the hardest part already.
-

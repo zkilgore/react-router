@@ -193,7 +193,7 @@ Rendering `Handler` is really just rendering `App` since it's the highest
 matched route handler. Since `inbox` is the active child route,
 rendering `<RouteHandler/>` in `App` renders the `Inbox` element.
 `<RouteHandler/>` is nearly identical to `{{outlet}}` from Ember or
-`<div ng-view/>` from angular.
+`<div ng-view/>` from Angular.
 
 When the user navigates to `/calendar`, the same thing happens except
 now `Calendar` is the `<RouteHandler/>` in `App`'s render method.
@@ -285,8 +285,8 @@ Dynamic Segments
 
 When we added the `message` route, we introduced a "dynamic segment" to
 the URL. These segments get parsed from the url and are available in
-the `run` callback, or from the `State` mixin. Let's see how we can
-access the params.
+the `run` callback, or from `this.context.router` in a route handler.
+Let's see how we can access the params.
 
 Remember our message route looks like this:
 
@@ -298,16 +298,19 @@ Lets look at accessing the `messageId` in `Message`.
 
 ```js
 var Message = React.createClass({
-  mixins: [Router.State],
+  contextTypes: {
+    router: React.PropTypes.func
+  },
+
   render: function () {
     return (
-      <div>{this.getParams().messageId}</div>
+      <div>{this.context.router.getCurrentParams().messageId}</div>
     );
   }
 });
 ```
 
-Assuming the user navigates to `/inbox/123`, `this.getParams().messageId` is
+Assuming the user navigates to `/inbox/123`, `this.context.router.getCurrentParams().messageId` is
 going to be `'123'`.
 
 Alternatively, you can pass the param data down through the view
@@ -361,13 +364,15 @@ If you would rather force route handlers to re-mount when transitioning between 
 
 ```js
 var App = React.createClass({
-
-  mixins: [Router.State],
+   contextTypes: {
+    router: React.PropTypes.func
+  },
 
   getHandlerKey: function () {
     var childDepth = 1; // assuming App is top-level route
-    var key = this.getRoutes()[childDepth].name;
-    var id = this.getParams().id;
+    var { router } = this.context;
+    var key = router.getRoutes()[childDepth].name;
+    var id = router.getParams().id;
     if (id) { key += id; }
     return key;
   },
@@ -446,12 +451,6 @@ API Documentation
 That's the gist of what this router is all about, but there's a lot more
 it has to offer. Check out the [API Docs][API] to learn about
 redirecting transitions, query parameters and more.
-
-  [AsyncState]:../api/mixins/AsyncState.md
-  [Route]:../api/components/Route.md
-  [create]: ../api/create.md
-  [API]:../api/
-  [path-matching]:./path-matching.md
 
 CommonJS Guide
 --------------

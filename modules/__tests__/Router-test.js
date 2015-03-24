@@ -193,7 +193,7 @@ describe('Router', function () {
             delay: Async.delay * 2,
 
             willTransitionTo: function (transition, params, query, callback) {
-              setTimeout(callback, this.delay);
+              setTimeout(callback, LongAsync.delay);
             }
           },
 
@@ -644,6 +644,15 @@ describe('Router', function () {
       Router.run(routes, '/?foo=bar', function (Handler, state) {
         var html = React.renderToString(<Handler foo={state.query.foo} />);
         expect(html).toMatch(/bar/);
+        done();
+      });
+    });
+
+    it('renders with empty query string', function (done) {
+      var routes = <Route handler={Foo} path='/'/>;
+      Router.run(routes, '/?', function (Handler, state) {
+        var html = React.renderToString(<Handler />);
+        expect(html).toMatch(/Foo/);
         done();
       });
     });
