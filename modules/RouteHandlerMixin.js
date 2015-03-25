@@ -7,39 +7,46 @@ var REF_NAME = '__routeHandler__';
 var RouteHandlerMixin = {
 
   contextTypes: {
-    getRouteAtDepth: PropTypes.func.isRequired,
-    setRouteComponentAtDepth: PropTypes.func.isRequired,
-    routeHandlers: PropTypes.array.isRequired
+    routeDepth: React.PropTypes.number.isRequired,
+    router: React.PropTypes.func.isRequired
   },
 
   childContextTypes: {
-    routeHandlers: PropTypes.array.isRequired
+    routeDepth: React.PropTypes.number.isRequired
   },
 
-  getChildContext: function () {
+  getChildContext() {
     return {
-      routeHandlers: this.context.routeHandlers.concat([ this ])
+      routeDepth: this.context.routeDepth + 1
     };
   },
 
-  componentDidMount: function () {
-    this._updateRouteComponent();
+  componentDidMount() {
+    if(!this.props.customRouteUpdater) {
+      this._updateRouteComponent(this.refs[REF_NAME]);
+    }
   },
 
-  componentDidUpdate: function () {
-    this._updateRouteComponent();
+  componentDidUpdate() {
+    if(!this.props.customRouteUpdater) {
+      this._updateRouteComponent(this.refs[REF_NAME]);
+    }
   },
 
-  _updateRouteComponent: function () {
-    this.context.setRouteComponentAtDepth(this.getRouteDepth(), this.refs[REF_NAME]);
+  componentWillUnmount() {
+    this._updateRouteComponent(null);
   },
 
-  getRouteDepth: function () {
-    return this.context.routeHandlers.length;
+  _updateRouteComponent(component) {
+    this.context.router.setRouteComponentAtDepth(this.getRouteDepth(), component);
   },
 
-  createChildRouteHandler: function (props) {
-    var route = this.context.getRouteAtDepth(this.getRouteDepth());
+  getRouteDepth() {
+    return this.context.routeDepth;
+  },
+
+  createChildRouteHandler(props) {
+    var route = this.context.router.getRouteAtDepth(this.getRouteDepth());
     return route ? React.createElement(route.handler, assign({}, props || this.props, { ref: REF_NAME })) : null;
   }
 
