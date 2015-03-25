@@ -26,4 +26,5 @@ exports.createRoutesFromReactChildren = require('./createRoutesFromReactChildren
 exports.create = require('./createRouter');
 exports.run = require('./runRouter');
 
+exports.RouteHandlerMixin = require('./RouteHandler');
 exports.PropTypes = require('./PropTypes');
